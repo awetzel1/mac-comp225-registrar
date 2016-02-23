@@ -6,6 +6,7 @@ import java.util.Set;
 
 /**
  * Created by bjackson on 2/21/2016.
+ * Refactored by Amber Wetzel
  */
 public class Student {
 
@@ -24,9 +25,12 @@ public class Student {
         return enrolledIn;
     }
 
-    public boolean enrollIn(Course c){
-        if(c.enrollIn(this)) {
-            enrolledIn.add(c);
+    /*
+    Enrolls the student in the passed in course
+     */
+    public boolean enrollIn(Course course){
+        if(course.enrollIn(this)) {
+            enrolledIn.add(course);
             return true;
         }
         else {
@@ -34,10 +38,13 @@ public class Student {
         }
     }
 
-    public void drop(Course c){
-        if (enrolledIn.contains(c)) {
-            enrolledIn.remove(c);
+    /*
+    Drops the student from the passed in course
+     */
+    public void drop(Course course){
+        if (enrolledIn.contains(course)) {
+            enrolledIn.remove(course);
         }
-        c.dropStudent(this);
+        course.dropStudent(this);
     }
 }

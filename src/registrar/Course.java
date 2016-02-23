@@ -7,6 +7,7 @@ import java.util.Set;
 
 /**
  * Created by bjackson on 2/21/2016.
+ * Refactored by Amber Wetzel
  */
 public class Course {
 
@@ -45,38 +46,45 @@ public class Course {
 
     public Set<Student> getStudents(){
         return enrolledIn;
-    }
+    } //TODO: this reads oddly
 
     public List<Student> getWaitList(){
         return waitlist;
     }
 
-    public boolean enrollIn(Student s){
-        if (enrolledIn.contains(s)){
+
+    /*
+    Enrolls the passed in student to the course
+    */
+    public boolean enrollIn(Student student){
+        if (enrolledIn.contains(student)){
             return true;
         }
         if (enrolledIn.size() >= limit){
-            if (waitlist.contains(s)){
+            if (waitlist.contains(student)){
                 return false;
             }
-            waitlist.add(s);
+            waitlist.add(student);
             return false;
         }
-        enrolledIn.add(s);
+        enrolledIn.add(student);
         return true;
     }
 
-    public void dropStudent(Student s){
-        if (enrolledIn.contains(s)) {
-            enrolledIn.remove(s);
+    /*
+    Drops the passed in student from the course
+    */
+    public void dropStudent(Student student){
+        if (enrolledIn.contains(student)) {
+            enrolledIn.remove(student);
             if (waitlist.size() > 0) {
                 Student toEnroll = waitlist.remove(0);
                 enrolledIn.add(toEnroll);
                 toEnroll.enrolledIn.add(this);
             }
         }
-        else if (waitlist.contains(s)){
-            waitlist.remove(s);
+        else if (waitlist.contains(student)){
+            waitlist.remove(student);
         }
     }
 
