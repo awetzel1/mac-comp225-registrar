@@ -54,22 +54,35 @@ public class Course {
 
 
     /*
-    Enrolls the passed in student to the course
+    Enrolls the passed in student to the courseenrolledIn.add(student);
+        return true;
     */
     public boolean enrollIn(Student student){
-        if (enrolledIn.contains(student)){
+        if (enrolledIn.contains(student)){ //step 1: check if student is already enrolled
             return true;
         }
-        if (enrolledIn.size() >= limit){
-            if (waitlist.contains(student)){
-                return false;
-            }
-            waitlist.add(student);
+        if (enrolledIn.size() >= limit){ //step 2: if the class is full, waitlist the student
+            return joinWaitlist(student);
+        }
+
+        else { //step 3: if the student is not in the class, and the class is not full, enroll them
+            enrolledIn.add(student);
+            return true;
+        }
+
+    }
+
+    /*
+    Adds the passed in student to the course's waitlist
+    This method assumes that enrolledIn.size >= limit, and is not accessed unless this is true
+     */
+    public boolean joinWaitlist(Student student){
+        if (waitlist.contains(student)){ //check if student is already waitlisted
             return false;
         }
-        enrolledIn.add(student);
-        return true;
-    }
+        waitlist.add(student); //If student is not waitlisted, waitlist them
+        return false;
+        }
 
     /*
     Drops the passed in student from the course
