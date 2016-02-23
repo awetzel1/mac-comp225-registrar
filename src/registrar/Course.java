@@ -46,7 +46,7 @@ public class Course {
 
     public Set<Student> getStudents(){
         return enrolledIn;
-    } //TODO: this reads oddly
+    }
 
     public List<Student> getWaitList(){
         return waitlist;
@@ -73,9 +73,10 @@ public class Course {
     }
 
     /*
-    Adds the passed in student to the course's waitlist
-    This method assumes that enrolledIn.size >= limit, and is not accessed unless this is true
-     */
+    Enrolls the passed in student to the course's waitlist;
+        return false;
+    NOTE: Assumes enrolledIn.size() >= limit
+    */
     public boolean joinWaitlist(Student student){
         if (waitlist.contains(student)){ //check if student is already waitlisted
             return false;
@@ -90,13 +91,27 @@ public class Course {
     public void dropStudent(Student student){
         if (enrolledIn.contains(student)) {
             enrolledIn.remove(student);
-            if (waitlist.size() > 0) {
-                Student toEnroll = waitlist.remove(0);
-                enrolledIn.add(toEnroll);
-                toEnroll.enrolledIn.add(this);
-            }
+            enrollFromWaitlist();
         }
-        else if (waitlist.contains(student)){
+        else {dropFromWaitlist(student);}
+    }
+
+    /*
+    Enrolls the first student from the waitlist into the course, and adds the course to that student's courses
+     */
+    public void enrollFromWaitlist(){
+        if (waitlist.size() > 0) {
+            Student toEnroll = waitlist.remove(0);
+            enrolledIn.add(toEnroll);
+            toEnroll.enrolledIn.add(this);
+        }
+    }
+
+    /*
+    Drops the passed in student from the waitlist
+     */
+    public void dropFromWaitlist(Student student){
+        if (waitlist.contains(student)){
             waitlist.remove(student);
         }
     }
