@@ -65,10 +65,19 @@ public class RegistrarTest {
 
     // ------ Enrollment limits ------
 
+
     @Test
-    public void coursesHaveEnrollmentLimits() {
+    public void coursesCanSetEnrollmentLimits() {
         comp225.setEnrollmentLimit(16);
         assertEquals(16, comp225.getEnrollmentLimit());
+    }
+
+
+    @Test
+    public void coursesCanRemoveEnrollementLimits() {
+        comp225.removeEnrollmentLimit();
+        assertEquals(99999, comp225.getEnrollmentLimit());
+        comp225.setEnrollmentLimit(16); //resets the enrollment limit to keep the other tests on track
     }
 
     @Test

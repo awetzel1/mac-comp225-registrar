@@ -12,7 +12,7 @@ public class Course {
     private List<Student> waitlist = new ArrayList<>();
     private String catalogNumber;
     private String title;
-    private int limit = 16;
+    private int limit = 99999;
 
 
     public String getCatalogNumber() {
@@ -39,10 +39,6 @@ public class Course {
             throw new IllegalArgumentException("course cannot have negative enrollment limit: " + limit);
         }
 
-//        if (!roster.isEmpty()) {
-//            return false;   //code for enforcing the no change rule on limits
-//        }
-
         if (limit >= roster.size()){ //covers both == 0 and updated limits
             this.limit = limit;
             return true;
@@ -50,7 +46,12 @@ public class Course {
         else { //when limit is less than # of students enrolled but not negative
             throw new IllegalArgumentException("cannot set the enrollment limit less than the amount currently enrolled: " + limit);
         }
+    }
 
+    public void removeEnrollmentLimit(){
+        this.limit = 99999; //TODO: Fix me
+
+        while(!waitlist.isEmpty()){enrollFromWaitlist();}
     }
 
     public Set<Student> getStudents(){
