@@ -118,10 +118,10 @@ public class RegistrarTest {
     }
 
     @Test
-    public void cannotChangeEnrollmentLimitOnceStudentsRegister(){
+    public void canChangeEnrollmentLimitOnceStudentsRegister(){
         assertTrue(basketWeaving101.setEnrollmentLimit(10));
         fred.enrollIn(basketWeaving101);
-        assertFalse(basketWeaving101.setEnrollmentLimit(8));
+        assertTrue(basketWeaving101.setEnrollmentLimit(8));
     }
 
     // ------ Drop courses ------
