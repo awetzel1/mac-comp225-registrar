@@ -77,7 +77,18 @@ public class RegistrarTest {
     public void coursesCanRemoveEnrollementLimits() {
         comp225.removeEnrollmentLimit();
         assertEquals(99999, comp225.getEnrollmentLimit());
-        comp225.setEnrollmentLimit(16); //resets the enrollment limit to keep the other tests on track
+    }
+
+    @Test
+    public void removingEnrollmentLimitEmptiesWaitlist() {
+        factory.enrollMultipleStudents(comp225, 15);
+        comp225.setEnrollmentLimit(16);
+        sally.enrollIn(comp225);
+        fred.enrollIn(comp225);
+        zongo.enrollIn(comp225);
+        assertTrue(!comp225.getWaitList().isEmpty());
+        comp225.removeEnrollmentLimit();
+        assertTrue(comp225.getWaitList().isEmpty());
     }
 
     @Test
