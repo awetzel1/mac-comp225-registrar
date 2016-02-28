@@ -1,7 +1,6 @@
 package registrar;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,31 +9,36 @@ import java.util.Set;
  */
 public class Student {
 
-    public String name;
-    public Set<Course> enrolledIn;
+    private String name;
+    public Set<Course> courses;
 
     public Student(){
-        enrolledIn = new HashSet<>();
+        courses = new HashSet<>();
     }
 
     public void setName(String name){
+        //if (name == null) {
+        //    throw new IllegalAccessException("Names cannot be null");
+        //}
         this.name = name;
     }
 
+    public String getName(){return name;}
+
     public Set<Course> getCourses(){
-        return enrolledIn;
+        return courses;
     }
 
     /*
     Enrolls the student in the passed in course
      */
-    public boolean enrollIn(Course course){
-        if(course.enrollIn(this)) {
-            enrolledIn.add(course);
+    public boolean enrollIn(Course course){ //this method is not named enroll() like it is described on git.
+        if(course.enroll(this)) {
+            courses.add(course);
             return true;
         }
         else {
-            return false;
+            return false; //is this an error message or a sign they've been waitlisted?
         }
     }
 
@@ -42,9 +46,14 @@ public class Student {
     Drops the student from the passed in course
      */
     public void drop(Course course){
-        if (enrolledIn.contains(course)) {
-            enrolledIn.remove(course);
+        if (courses.contains(course)) {
+            courses.remove(course);
         }
         course.dropStudent(this);
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

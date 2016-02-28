@@ -67,7 +67,7 @@ public class Course {
     Enrolls the passed in student to the courseenrolledIn.add(student);
         return true;
     */
-    public boolean enrollIn(Student student){
+    public boolean enroll(Student student){
         if (roster.contains(student)){ //step 1: check if student is already enrolled
             return true;
         }
@@ -85,7 +85,7 @@ public class Course {
     /*
     Enrolls the passed in student to the course's waitlist;
         return false;
-    NOTE: Assumes enrolledIn.size() >= enrollementLimit
+    NOTE: does not check if the course is already full
     (NOTE: Can be made smaller by becoming a void method using if(!waitlist.contains(s)))
     */
     public boolean joinWaitlist(Student student){
@@ -114,7 +114,7 @@ public class Course {
         if (!waitlist.isEmpty()) {
             Student toEnroll = waitlist.remove(0);
             roster.add(toEnroll);
-            toEnroll.enrolledIn.add(this);
+            toEnroll.courses.add(this);
         }
     }
 
